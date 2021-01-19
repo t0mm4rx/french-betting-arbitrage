@@ -1,14 +1,19 @@
 from bs4 import BeautifulSoup
 import requests
 
-def get_page():
-	url = "https://paris-sportifs.pmu.fr/pari/competition/169/football/ligue-1-conforama"
+def get_page(competition):
+	if (competition == "ligue1"):
+		url = "https://paris-sportifs.pmu.fr/pari/competition/169/football/ligue-1-conforama"
+	elif (competition == "liga"):
+		url = "https://paris-sportifs.pmu.fr/pari/competition/322/football/la-liga"
+	else:
+		return None
 	response = requests.get(url, headers={"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36"})
 	html = BeautifulSoup(response.content, 'html.parser')
 	return html
 
-def get_games():
-	html = get_page()
+def get_games(competition="ligue1"):
+	html = get_page(competition)
 	games = []
 	game_elements = html.select(".pmu-event-list-grid-highlights-formatter-row")
 	for el in game_elements:
