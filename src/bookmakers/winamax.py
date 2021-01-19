@@ -1,28 +1,22 @@
 import requests
 import json
 
-competition_ids = {
-	"ligue1": 4,
-	"liga": 36,
-	"bundesliga": 42,
-	"premier-league": 1,
-	"serie-a": 33,
-	"primeira": 52,
+competition_urls = {
+	"ligue1": "https://www.winamax.fr/paris-sportifs/sports/1/7/4",
+	"liga": "https://www.winamax.fr/paris-sportifs/sports/1/32/36",
+	"bundesliga": "https://www.winamax.fr/paris-sportifs/sports/1/30/42",
+	"premier-league": "https://www.winamax.fr/paris-sportifs/sports/1/1/1",
+	"serie-a": "https://www.winamax.fr/paris-sportifs/sports/1/31/33",
+	"primeira": "https://www.winamax.fr/paris-sportifs/sports/1/44/52",
+	"serie-a-brasil": "https://www.winamax.fr/paris-sportifs/sports/1/13/83",
+	"a-league": "https://www.winamax.fr/paris-sportifs/sports/1/34/144",
+	"bundesliga-austria": "https://www.winamax.fr/paris-sportifs/sports/1/17/29",
+	"division-1a": "https://www.winamax.fr/paris-sportifs/sports/1/33/38",
 }
 
 def get_page(competition):
-	if (competition == "ligue1"):
-		url = "https://www.winamax.fr/paris-sportifs/sports/1/7/4"
-	elif (competition == "liga"):
-		url = "https://www.winamax.fr/paris-sportifs/sports/1/32/36"
-	elif (competition == "bundesliga"):
-		url = "https://www.winamax.fr/paris-sportifs/sports/1/30/42"
-	elif (competition == "premier-league"):
-		url = "https://www.winamax.fr/paris-sportifs/sports/1/1/1"
-	elif (competition == "serie-a"):
-		url = "https://www.winamax.fr/paris-sportifs/sports/1/31/33"
-	elif (competition == "primeira"):
-		url = "https://www.winamax.fr/paris-sportifs/sports/1/44/52"
+	if (competition in competition_urls):
+		url = competition_urls[competition]
 	else:
 		return None
 	response = requests.get(url, headers={"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36"})
@@ -35,11 +29,15 @@ def get_json(competition):
 	split2 = split1.split(";</script>")[0]
 	return json.loads(split2)
 
+def get_id(competition):
+	url = competition_urls[competition]
+	return int(url.split("/")[-1])
+
 def get_games(competition="ligue1"):
 	games = []
 	json = get_json(competition)
 	for game in json['matches']:
-		if (json['matches'][game]['tournamentId'] != competition_ids[competition]):
+		if (json['matches'][game]['tournamentId'] != get_id(competition)):
 			continue
 		team1 = json['matches'][game]['competitor1Name']
 		team2 = json['matches'][game]['competitor2Name']

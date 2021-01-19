@@ -1,13 +1,19 @@
 import bookmakers.winamax as winamax
 import bookmakers.pmu as pmu
+import bookmakers.betclic as betclic
 import arb
 
 for competition in arb.competitions:
-	winamax_games = winamax.get_games(competition)
-	pmu_games = pmu.get_games(competition)
+	bookmakers = {
+		'winamax': winamax.get_games(competition),
+		'pmu': pmu.get_games(competition),
+		'betlic': betclic.get_games(competition)
+	}
 	print("-- Competition: {} --".format(competition))
-	for game in winamax_games:
-		print("{} - {}".format(game['team1'], game['team2']), end=" ")
-		other = arb.get_game(game, pmu_games)
-		print("({} - {})".format(other['team1'], other['team2']))
-		arb.arb_games(game, other)
+	for game in bookmakers['winamax']:
+		games = {}
+		for bookmaker in bookmakers:
+			games[bookmaker] = arb.get_game(game, bookmakers[bookmaker])
+		arb.arb_bookmakers(games)
+
+
