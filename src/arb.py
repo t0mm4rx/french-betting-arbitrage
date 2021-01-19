@@ -24,6 +24,10 @@ def get_game(game, others):
 		if (sim > m):
 			m = sim
 			m_obj = other
+	if (str_similarity(game['team1'], m_obj['team1']) < 0.3):
+		return None
+	if (str_similarity(game['team2'], m_obj['team2']) < 0.3):
+		return None
 	return m_obj
 
 def arb(a, n, b):
@@ -62,7 +66,7 @@ def arb_bookmakers(games):
 	combinations = nb_bookmakers ** 3
 	print("-- Arbitrage on: ")
 	for game in games:
-		print("{}: {} - {} @{}/{}/{}".format(game, games[game]['team1'], games[game]['team2'], games[game]['odds'][0], games[game]['odds'][1], games[game]['odds'][2]))
+		print("{:10}: {} - {} @{}/{}/{}".format(game, games[game]['team1'], games[game]['team2'], games[game]['odds'][0], games[game]['odds'][1], games[game]['odds'][2]))
 	print("{} combinations possible --".format(combinations))
 	for i in range(combinations):
 		combination = str(dec_to_base(i, nb_bookmakers)).zfill(3)
