@@ -6,6 +6,14 @@ def get_page(competition):
 		url = "https://paris-sportifs.pmu.fr/pari/competition/169/football/ligue-1-conforama"
 	elif (competition == "liga"):
 		url = "https://paris-sportifs.pmu.fr/pari/competition/322/football/la-liga"
+	elif (competition == "bundesliga"):
+		url = "https://paris-sportifs.pmu.fr/pari/competition/32/football/bundesliga"
+	elif (competition == "premier-league"):
+		url = "https://paris-sportifs.pmu.fr/pari/competition/13/football/premier-league"
+	elif (competition == "serie-a"):
+		url = "https://paris-sportifs.pmu.fr/pari/competition/308/football/italie-serie-a"
+	elif (competition == "primeira"):
+		url = "https://paris-sportifs.pmu.fr/pari/competition/273/football/primeira-liga"
 	else:
 		return None
 	response = requests.get(url, headers={"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36"})

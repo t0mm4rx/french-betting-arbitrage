@@ -1,6 +1,13 @@
 from difflib import SequenceMatcher
 
-competitions = ["ligue1", "liga"]
+competitions = [
+	# "ligue1",
+	# "liga",
+	# "bundesliga",
+	# "premier-league",
+	# "serie-a",
+	"primeira",
+]
 
 def str_similarity(a, b):
 	return SequenceMatcher(None, a, b).ratio()

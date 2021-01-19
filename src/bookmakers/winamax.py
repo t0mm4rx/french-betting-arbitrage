@@ -3,7 +3,11 @@ import json
 
 competition_ids = {
 	"ligue1": 4,
-	"liga": 36
+	"liga": 36,
+	"bundesliga": 42,
+	"premier-league": 1,
+	"serie-a": 33,
+	"primeira": 52,
 }
 
 def get_page(competition):
@@ -11,6 +15,14 @@ def get_page(competition):
 		url = "https://www.winamax.fr/paris-sportifs/sports/1/7/4"
 	elif (competition == "liga"):
 		url = "https://www.winamax.fr/paris-sportifs/sports/1/32/36"
+	elif (competition == "bundesliga"):
+		url = "https://www.winamax.fr/paris-sportifs/sports/1/30/42"
+	elif (competition == "premier-league"):
+		url = "https://www.winamax.fr/paris-sportifs/sports/1/1/1"
+	elif (competition == "serie-a"):
+		url = "https://www.winamax.fr/paris-sportifs/sports/1/31/33"
+	elif (competition == "primeira"):
+		url = "https://www.winamax.fr/paris-sportifs/sports/1/44/52"
 	else:
 		return None
 	response = requests.get(url, headers={"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36"})
