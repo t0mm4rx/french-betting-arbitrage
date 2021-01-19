@@ -24,9 +24,9 @@ def get_game(game, others):
 		if (sim > m):
 			m = sim
 			m_obj = other
-	if (str_similarity(game['team1'], m_obj['team1']) < 0.3):
+	if (str_similarity(game['team1'], m_obj['team1']) < 0.4):
 		return None
-	if (str_similarity(game['team2'], m_obj['team2']) < 0.3):
+	if (str_similarity(game['team2'], m_obj['team2']) < 0.4):
 		return None
 	return m_obj
 
