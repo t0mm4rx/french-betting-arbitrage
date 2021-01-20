@@ -3,15 +3,15 @@ import log
 
 competitions = [
 	"ligue1",
-	# "liga",
-	# "bundesliga",
-	# "premier-league",
-	# "serie-a",
-	# "primeira",
-	# "serie-a-brasil",
-	# "a-league",
-	# "bundesliga-austria",
-	# "division-1a",
+	"liga",
+	"bundesliga",
+	"premier-league",
+	"serie-a",
+	"primeira",
+	"serie-a-brasil",
+	"a-league",
+	"bundesliga-austria",
+	"division-1a",
 ]
 
 def str_similarity(a, b):
