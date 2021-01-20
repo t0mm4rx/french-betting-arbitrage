@@ -1,22 +1,25 @@
 from difflib import SequenceMatcher
+import log
 
 competitions = [
 	"ligue1",
-	"liga",
-	"bundesliga",
-	"premier-league",
-	"serie-a",
-	"primeira",
-	"serie-a-brasil",
-	"a-league",
-	"bundesliga-austria",
-	"division-1a",
+	# "liga",
+	# "bundesliga",
+	# "premier-league",
+	# "serie-a",
+	# "primeira",
+	# "serie-a-brasil",
+	# "a-league",
+	# "bundesliga-austria",
+	# "division-1a",
 ]
 
 def str_similarity(a, b):
 	return SequenceMatcher(None, a, b).ratio()
 
 def get_game(game, others):
+	if (len(others) == 0 or game == None):
+		return None
 	m = 0
 	m_obj = None
 	for other in others:
@@ -42,12 +45,12 @@ b a b
 b b a
 """
 def arb_games(a, b):
-	print("{:.2f}%".format(arb(a['odds'][0], a['odds'][1], b['odds'][2])))
-	print("{:.2f}%".format(arb(a['odds'][0], b['odds'][1], a['odds'][2])))
-	print("{:.2f}%".format(arb(a['odds'][0], b['odds'][1], b['odds'][2])))
-	print("{:.2f}%".format(arb(b['odds'][0], a['odds'][1], a['odds'][2])))
-	print("{:.2f}%".format(arb(b['odds'][0], a['odds'][1], b['odds'][2])))
-	print("{:.2f}%".format(arb(b['odds'][0], b['odds'][1], a['odds'][2])))
+	log.log("{:.2f}%".format(arb(a['odds'][0], a['odds'][1], b['odds'][2])))
+	log.log("{:.2f}%".format(arb(a['odds'][0], b['odds'][1], a['odds'][2])))
+	log.log("{:.2f}%".format(arb(a['odds'][0], b['odds'][1], b['odds'][2])))
+	log.log("{:.2f}%".format(arb(b['odds'][0], a['odds'][1], a['odds'][2])))
+	log.log("{:.2f}%".format(arb(b['odds'][0], a['odds'][1], b['odds'][2])))
+	log.log("{:.2f}%".format(arb(b['odds'][0], b['odds'][1], a['odds'][2])))
 
 def dec_to_base(num, base):
 	base_num = ""
@@ -64,25 +67,34 @@ def dec_to_base(num, base):
 def arb_bookmakers(games):
 	nb_bookmakers = len(games)
 	combinations = nb_bookmakers ** 3
-	print("-- Arbitrage on: ")
+	log.log("-- Arbitrage on: ")
 	for game in games:
-		print("{:10}: {} - {} @{}/{}/{}".format(game, games[game]['team1'], games[game]['team2'], games[game]['odds'][0], games[game]['odds'][1], games[game]['odds'][2]))
-	print("{} combinations possible --".format(combinations))
+		log.log("{:10}: {} - {} @{}/{}/{}".format(game, games[game]['team1'], games[game]['team2'], games[game]['odds'][0], games[game]['odds'][1], games[game]['odds'][2]))
+	log.log("{} combinations possible --".format(combinations))
 	for i in range(combinations):
 		combination = str(dec_to_base(i, nb_bookmakers)).zfill(3)
-		# a = int(combination[0])
-		# print(a)
+		b1 = list(games.keys())[int(combination[0])]
+		b2 = list(games.keys())[int(combination[1])]
+		b3 = list(games.keys())[int(combination[2])]
 		profit = arb(
-				games[list(games.keys())[int(combination[0])]]['odds'][0],
-				games[list(games.keys())[int(combination[1])]]['odds'][1],
-				games[list(games.keys())[int(combination[2])]]['odds'][2],
+				games[b1]['odds'][0],
+				games[b2]['odds'][1],
+				games[b3]['odds'][2],
 		)
 		if (profit > 0):
-			print("FOUND!!!!") 
-		print("{}: ({:10}/{:10}/{:10}) {:.2f}%".format(
+			log.log("FOUND!!!!")
+			log.discord("Abritrage found for {}-{} with {}/{}/{}: {:.2f}%".format(
+				games[b1]['team1'],
+				games[b1]['team2'],
+				b1,
+				b2,
+				b3,
+				profit
+			))
+		log.log("{}: ({:10}/{:10}/{:10}) {:.2f}%".format(
 			" ".join(combination.split()),
-			list(games.keys())[int(combination[0])],
-			list(games.keys())[int(combination[1])],
-			list(games.keys())[int(combination[2])],
+			b1,
+			b2,
+			b3,
 			profit
 		))
