@@ -21,8 +21,7 @@ def get_page(competition):
 		return None
 	response = requests.get(url, headers={"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36"})
 	html = BeautifulSoup(response.content, 'html.parser')
-	# return html
-	return None
+	return html
 
 def get_games(competition="ligue1"):
 	html = get_page(competition)
