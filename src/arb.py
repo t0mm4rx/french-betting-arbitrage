@@ -36,22 +36,6 @@ def get_game(game, others):
 def arb(a, n, b):
 	return (1 - (1/a + 1/n + 1/b)) * 100
 
-"""
-a a b
-a b a
-a b b
-b a a
-b a b
-b b a
-"""
-def arb_games(a, b):
-	log.log("{:.2f}%".format(arb(a['odds'][0], a['odds'][1], b['odds'][2])))
-	log.log("{:.2f}%".format(arb(a['odds'][0], b['odds'][1], a['odds'][2])))
-	log.log("{:.2f}%".format(arb(a['odds'][0], b['odds'][1], b['odds'][2])))
-	log.log("{:.2f}%".format(arb(b['odds'][0], a['odds'][1], a['odds'][2])))
-	log.log("{:.2f}%".format(arb(b['odds'][0], a['odds'][1], b['odds'][2])))
-	log.log("{:.2f}%".format(arb(b['odds'][0], b['odds'][1], a['odds'][2])))
-
 def dec_to_base(num, base):
 	base_num = ""
 	while (num > 0):
@@ -83,13 +67,32 @@ def arb_bookmakers(games):
 		)
 		if (profit > 0):
 			log.log("FOUND!!!!")
-			log.discord("Abritrage found for {}-{} with {}/{}/{}: {:.2f}%".format(
+			stakes = get_stakes(
+				games[b1]['odds'][0],
+				games[b2]['odds'][1],
+				games[b3]['odds'][2],
+				10)
+			log.discord("Abritrage found for **{}**-**{}** with **{}/{}/{}** with odds {}/{}/{}: {:.2f}%".format(
 				games[b1]['team1'],
 				games[b1]['team2'],
 				b1,
 				b2,
 				b3,
+				games[b1]['odds'][0],
+				games[b2]['odds'][1],
+				games[b3]['odds'][2],
 				profit
+			))
+			log.discord("> Stakes: **{}**@{} on {} for A, **{}**@{} on {} for N, **{}**@{} on {} for B".format(
+				stakes['rounded'][0],
+				games[b1]['odds'][0],
+				b1,
+				stakes['rounded'][1],
+				games[b2]['odds'][1],
+				b2,
+				stakes['rounded'][2],
+				games[b3]['odds'][2],
+				b3,
 			))
 		log.log("{}: ({:10}/{:10}/{:10}) {:.2f}%".format(
 			" ".join(combination.split()),
@@ -98,3 +101,19 @@ def arb_bookmakers(games):
 			b3,
 			profit
 		))
+
+def get_stakes(a, n, b, investment):
+	amount = arb(a, n, b)
+	tmp = (100 - amount) / 100
+	return {
+		'raw': (
+			investment / (tmp * a),
+			investment / (tmp * n),
+			investment / (tmp * b)
+		),
+		'rounded': (
+			round(investment / (tmp * a) * 10) / 10,
+			round(investment / (tmp * n) * 10) / 10,
+			round(investment / (tmp * b) * 10) / 10
+		)
+	}

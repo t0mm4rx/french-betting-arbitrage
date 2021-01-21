@@ -9,7 +9,10 @@ import log
 
 log.init()
 
+progress = 0
 for competition in arb.competitions:
+	progress += 1
+	print("Progess: {:.2f}%".format(progress / len(arb.competitions) * 100))
 	try:
 		bookmakers = {
 			'winamax': winamax.get_games(competition),
