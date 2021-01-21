@@ -12,6 +12,7 @@ competition_urls = {
 	"a-league": "https://www.betclic.fr/football-s1/australie-a-league-c1874",
 	"bundesliga-austria": "https://www.betclic.fr/football-s1/autriche-bundesliga-c35",
 	"division-1a": "https://www.betclic.fr/football-s1/belgique-division-1a-c26",
+	"super-lig": "https://www.betclic.fr/football-s1/turquie-super-lig-c37",
 }
 
 def get_page(competition):

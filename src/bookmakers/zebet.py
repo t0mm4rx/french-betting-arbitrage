@@ -12,6 +12,7 @@ competition_urls = {
 	"a-league": "https://www.zebet.fr/fr/competition/2169-a_league",
 	"bundesliga-austria": "https://www.zebet.fr/fr/competition/131-bundesliga",
 	"division-1a": "https://www.zebet.fr/fr/competition/101-pro_league_1a",
+	"super-lig": "https://www.zebet.fr/fr/competition/254-super_lig",
 }
 
 def get_page(competition):

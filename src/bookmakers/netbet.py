@@ -12,6 +12,7 @@ competition_urls = {
 	"a-league": "https://www.netbet.fr/football/australie/a-league",
 	"bundesliga-austria": "https://www.netbet.fr/football/autriche/bundesliga",
 	"division-1a": "https://www.netbet.fr/football/belgique/pro-league",
+	"super-lig": "https://www.netbet.fr/football/turquie/super-lig",
 }
 
 def get_page(competition):

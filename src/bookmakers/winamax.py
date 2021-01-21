@@ -12,6 +12,7 @@ competition_urls = {
 	"a-league": "https://www.winamax.fr/paris-sportifs/sports/1/34/144",
 	"bundesliga-austria": "https://www.winamax.fr/paris-sportifs/sports/1/17/29",
 	"division-1a": "https://www.winamax.fr/paris-sportifs/sports/1/33/38",
+	"super-lig": "https://www.winamax.fr/paris-sportifs/sports/1/46/62",
 }
 
 def get_page(competition):

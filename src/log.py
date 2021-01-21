@@ -23,7 +23,7 @@ def log(message, end="\n"):
 def discord(message):
 	global last_discord_message
 	try:
-		if (time.time() - last_discord_message < discord_waiting_time):
+		while (time.time() - last_discord_message < discord_waiting_time):
 			time.sleep(discord_waiting_time)
 		last_discord_message = time.time()
 		notifier = dn.Notifier(url)

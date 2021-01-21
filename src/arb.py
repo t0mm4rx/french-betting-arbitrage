@@ -2,16 +2,17 @@ from difflib import SequenceMatcher
 import log
 
 competitions = [
-	"ligue1",
+	# "ligue1",
 	"liga",
-	"bundesliga",
+	# "bundesliga",
 	"premier-league",
 	"serie-a",
-	"primeira",
-	"serie-a-brasil",
-	"a-league",
-	"bundesliga-austria",
+	# "primeira",
+	# "serie-a-brasil",
+	# "a-league",
+	# "bundesliga-austria",
 	"division-1a",
+	# "super-lig"
 ]
 
 def str_similarity(a, b):

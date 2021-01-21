@@ -12,6 +12,7 @@ competition_urls = {
 	"a-league": "https://paris-sportifs.pmu.fr/pari/competition/1812/football/australie-league",
 	"bundesliga-austria": "https://paris-sportifs.pmu.fr/pari/competition/63/football/autriche-bundesliga",
 	"division-1a": "https://paris-sportifs.pmu.fr/pari/competition/8124/football/division-1a",
+	"super-lig": "https://paris-sportifs.pmu.fr/pari/competition/1529/football/turquie-super-ligue",
 }
 
 def get_page(competition):
