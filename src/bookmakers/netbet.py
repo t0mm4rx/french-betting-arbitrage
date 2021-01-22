@@ -2,22 +2,25 @@ from bs4 import BeautifulSoup
 import requests
 
 competition_urls = {
-	"ligue1": "https://www.netbet.fr/football/france/ligue-1-uber-eats",
-	"liga": "https://www.netbet.fr/football/espagne/laliga",
-	"bundesliga": "https://www.netbet.fr/football/allemagne/bundesliga",
-	"premier-league": "https://www.netbet.fr/football/angleterre/premier-league",
-	"serie-a": "https://www.netbet.fr/football/italie/coupe-d-italie",
-	"primeira": "https://www.netbet.fr/football/portugal/primeira-liga",
-	"serie-a-brasil": "https://www.netbet.fr/football/bresil/brasileirao",
-	"a-league": "https://www.netbet.fr/football/australie/a-league",
-	"bundesliga-austria": "https://www.netbet.fr/football/autriche/bundesliga",
-	"division-1a": "https://www.netbet.fr/football/belgique/pro-league",
-	"super-lig": "https://www.netbet.fr/football/turquie/super-lig",
+	'football': 
+	{
+		"ligue1": "https://www.netbet.fr/football/france/ligue-1-uber-eats",
+		"liga": "https://www.netbet.fr/football/espagne/laliga",
+		"bundesliga": "https://www.netbet.fr/football/allemagne/bundesliga",
+		"premier-league": "https://www.netbet.fr/football/angleterre/premier-league",
+		"serie-a": "https://www.netbet.fr/football/italie/coupe-d-italie",
+		"primeira": "https://www.netbet.fr/football/portugal/primeira-liga",
+		"serie-a-brasil": "https://www.netbet.fr/football/bresil/brasileirao",
+		"a-league": "https://www.netbet.fr/football/australie/a-league",
+		"bundesliga-austria": "https://www.netbet.fr/football/autriche/bundesliga",
+		"division-1a": "https://www.netbet.fr/football/belgique/pro-league",
+		"super-lig": "https://www.netbet.fr/football/turquie/super-lig",
+	}
 }
 
 def get_page(competition):
-	if (competition in competition_urls):
-		url = competition_urls[competition]
+	if (competition["sport"] in competition_urls and competition["competition"] in competition_urls[competition["sport"]]):
+		url = competition_urls[competition["sport"]][competition["competition"]]
 	else:
 		return None
 	response = requests.get(url, headers={"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36"})

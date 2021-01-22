@@ -2,22 +2,25 @@ import requests
 import json
 
 competition_urls = {
-	"ligue1": "https://www.winamax.fr/paris-sportifs/sports/1/7/4",
-	"liga": "https://www.winamax.fr/paris-sportifs/sports/1/32/36",
-	"bundesliga": "https://www.winamax.fr/paris-sportifs/sports/1/30/42",
-	"premier-league": "https://www.winamax.fr/paris-sportifs/sports/1/1/1",
-	"serie-a": "https://www.winamax.fr/paris-sportifs/sports/1/31/33",
-	"primeira": "https://www.winamax.fr/paris-sportifs/sports/1/44/52",
-	"serie-a-brasil": "https://www.winamax.fr/paris-sportifs/sports/1/13/83",
-	"a-league": "https://www.winamax.fr/paris-sportifs/sports/1/34/144",
-	"bundesliga-austria": "https://www.winamax.fr/paris-sportifs/sports/1/17/29",
-	"division-1a": "https://www.winamax.fr/paris-sportifs/sports/1/33/38",
-	"super-lig": "https://www.winamax.fr/paris-sportifs/sports/1/46/62",
+	'football':
+	{
+		"ligue1": "https://www.winamax.fr/paris-sportifs/sports/1/7/4",
+		"liga": "https://www.winamax.fr/paris-sportifs/sports/1/32/36",
+		"bundesliga": "https://www.winamax.fr/paris-sportifs/sports/1/30/42",
+		"premier-league": "https://www.winamax.fr/paris-sportifs/sports/1/1/1",
+		"serie-a": "https://www.winamax.fr/paris-sportifs/sports/1/31/33",
+		"primeira": "https://www.winamax.fr/paris-sportifs/sports/1/44/52",
+		"serie-a-brasil": "https://www.winamax.fr/paris-sportifs/sports/1/13/83",
+		"a-league": "https://www.winamax.fr/paris-sportifs/sports/1/34/144",
+		"bundesliga-austria": "https://www.winamax.fr/paris-sportifs/sports/1/17/29",
+		"division-1a": "https://www.winamax.fr/paris-sportifs/sports/1/33/38",
+		"super-lig": "https://www.winamax.fr/paris-sportifs/sports/1/46/62",
+	}
 }
 
 def get_page(competition):
-	if (competition in competition_urls):
-		url = competition_urls[competition]
+	if (competition["sport"] in competition_urls and competition["competition"] in competition_urls[competition["sport"]]):
+		url = competition_urls[competition["sport"]][competition["competition"]]
 	else:
 		return None
 	response = requests.get(url, headers={"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36"})
@@ -31,7 +34,7 @@ def get_json(competition):
 	return json.loads(split2)
 
 def get_id(competition):
-	url = competition_urls[competition]
+	url = competition_urls[competition["sport"]][competition["competition"]]
 	return int(url.split("/")[-1])
 
 def get_games(competition="ligue1"):
@@ -40,8 +43,8 @@ def get_games(competition="ligue1"):
 	for game in json['matches']:
 		if (json['matches'][game]['tournamentId'] != get_id(competition)):
 			continue
-		team1 = json['matches'][game]['competitor1Name']
-		team2 = json['matches'][game]['competitor2Name']
+		team1 = "".join(json['matches'][game]['competitor1Name'].split())
+		team2 = "".join(json['matches'][game]['competitor2Name'].split())
 		bet_id = json['matches'][game]['mainBetId']
 		bet = json['bets'][str(bet_id)]['outcomes']
 		if (len(bet) != 3):

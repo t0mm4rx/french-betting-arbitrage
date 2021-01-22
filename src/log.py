@@ -3,8 +3,8 @@ from datetime import datetime
 import os
 import time
 import sys
+import config
 
-url = "https://discord.com/api/webhooks/801389334615949342/E0KM3HN5jvoOapgt6uXdEQ-fmT5A5m8LUZkBYAEH1FmC8UQrbZ2pbjEtdaSBx90HL_Kt"
 discord_waiting_time = 1
 
 def init():
@@ -26,7 +26,7 @@ def discord(message):
 		while (time.time() - last_discord_message < discord_waiting_time):
 			time.sleep(discord_waiting_time)
 		last_discord_message = time.time()
-		notifier = dn.Notifier(url)
+		notifier = dn.Notifier(config.discord_url)
 		notifier.send(message, print_message=False)
 	except:
 		log("Error: cannot send message on Discord: {}".format(sys.exc_info()[0]))

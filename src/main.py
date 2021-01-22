@@ -6,13 +6,13 @@ import bookmakers.netbet as netbet
 import arb
 import sys
 import log
+import config
 
 log.init()
 
 progress = 0
-for competition in arb.competitions:
+for competition in config.competitions:
 	progress += 1
-	print("Progess: {:.2f}%".format(progress / len(arb.competitions) * 100))
 	try:
 		bookmakers = {
 			'winamax': winamax.get_games(competition),
@@ -35,3 +35,4 @@ for competition in arb.competitions:
 			except:
 				log.log("Error while retrieving games: {}".format(sys.exc_info()[0]))
 		arb.arb_bookmakers(games)
+	print("Progess: {:.2f}%".format(progress / len(config.competitions) * 100))

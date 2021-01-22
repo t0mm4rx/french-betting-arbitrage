@@ -1,20 +1,6 @@
 from difflib import SequenceMatcher
 import log
 
-competitions = [
-	# "ligue1",
-	"liga",
-	# "bundesliga",
-	"premier-league",
-	"serie-a",
-	# "primeira",
-	# "serie-a-brasil",
-	# "a-league",
-	# "bundesliga-austria",
-	"division-1a",
-	# "super-lig"
-]
-
 def str_similarity(a, b):
 	return SequenceMatcher(None, a, b).ratio()
 
@@ -28,9 +14,9 @@ def get_game(game, others):
 		if (sim > m):
 			m = sim
 			m_obj = other
-	if (str_similarity(game['team1'], m_obj['team1']) < 0.4):
+	if (str_similarity(game['team1'], m_obj['team1']) < 0.42):
 		return None
-	if (str_similarity(game['team2'], m_obj['team2']) < 0.4):
+	if (str_similarity(game['team2'], m_obj['team2']) < 0.42):
 		return None
 	return m_obj
 
