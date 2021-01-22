@@ -15,6 +15,10 @@ competition_urls = {
 		"bundesliga-austria": "https://paris-sportifs.pmu.fr/pari/competition/63/football/autriche-bundesliga",
 		"division-1a": "https://paris-sportifs.pmu.fr/pari/competition/8124/football/division-1a",
 		"super-lig": "https://paris-sportifs.pmu.fr/pari/competition/1529/football/turquie-super-ligue",
+	},
+	'basketball':
+	{
+		"nba": "https://paris-sportifs.pmu.fr/pari/competition/3502/basket-us/nba"
 	}
 }
 
@@ -27,7 +31,7 @@ def get_page(competition):
 	html = BeautifulSoup(response.content, 'html.parser')
 	return html
 
-def get_games(competition="ligue1"):
+def get_games(competition):
 	html = get_page(competition)
 	games = []
 	game_elements = html.select(".pmu-event-list-grid-highlights-formatter-row")

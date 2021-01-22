@@ -15,6 +15,10 @@ competition_urls = {
 			"bundesliga-austria": "https://www.betclic.fr/football-s1/autriche-bundesliga-c35",
 			"division-1a": "https://www.betclic.fr/football-s1/belgique-division-1a-c26",
 			"super-lig": "https://www.betclic.fr/football-s1/turquie-super-lig-c37",
+		},
+		'basketball':
+		{
+			"nba": "https://www.betclic.fr/basket-ball-s4/nba-c13"
 		}
 }
 

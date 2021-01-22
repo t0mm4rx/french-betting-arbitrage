@@ -15,6 +15,10 @@ competition_urls = {
 		"bundesliga-austria": "https://www.netbet.fr/football/autriche/bundesliga",
 		"division-1a": "https://www.netbet.fr/football/belgique/pro-league",
 		"super-lig": "https://www.netbet.fr/football/turquie/super-lig",
+	},
+	'basketball':
+	{
+		"nba": "https://www.netbet.fr/basketball/etats-unis/nba"
 	}
 }
 
@@ -27,7 +31,7 @@ def get_page(competition):
 	html = BeautifulSoup(response.content, 'html.parser')
 	return html
 
-def get_games(competition="ligue1"):
+def get_games(competition):
 	html = get_page(competition)
 	games = []
 	game_elements = html.select(".nb-event")

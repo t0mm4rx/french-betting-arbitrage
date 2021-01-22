@@ -13,17 +13,17 @@ log.init()
 progress = 0
 for competition in config.competitions:
 	progress += 1
-	try:
-		bookmakers = {
-			'winamax': winamax.get_games(competition),
-			'pmu': pmu.get_games(competition),
-			'betlic': betclic.get_games(competition),
-			'zebet': zebet.get_games(competition),
-			'netbet': netbet.get_games(competition)
-		}
-	except:
-		log.log("Error while fetching games: {}".format(sys.exc_info()[0]))
-		continue
+	# try:
+	bookmakers = {
+		'winamax': winamax.get_games(competition),
+		'pmu': pmu.get_games(competition),
+		'betlic': betclic.get_games(competition),
+		'zebet': zebet.get_games(competition),
+		'netbet': netbet.get_games(competition)
+	}
+	# except:
+	# 	log.log("Error while fetching games: {}".format(sys.exc_info()[0]))
+	# 	continue
 	log.log("-- Competition: {} --".format(competition))
 	for game in bookmakers['winamax']:
 		games = {}
@@ -34,5 +34,8 @@ for competition in config.competitions:
 					games[bookmaker] = g
 			except:
 				log.log("Error while retrieving games: {}".format(sys.exc_info()[0]))
-		arb.arb_bookmakers(games)
+		if (competition["sport"] == "football"):
+			arb.arb_football(games)
+		if (competition["sport"] == "basketball"):
+			arb.arb_basketball(games)
 	print("Progess: {:.2f}%".format(progress / len(config.competitions) * 100))

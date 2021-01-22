@@ -15,6 +15,10 @@ competition_urls = {
 		"bundesliga-austria": "https://www.zebet.fr/fr/competition/131-bundesliga",
 		"division-1a": "https://www.zebet.fr/fr/competition/101-pro_league_1a",
 		"super-lig": "https://www.zebet.fr/fr/competition/254-super_lig",
+	},
+	'basketball':
+	{
+		"nba": "https://www.zebet.fr/fr/competition/206-nba"
 	}
 }
 
@@ -27,14 +31,17 @@ def get_page(competition):
 	html = BeautifulSoup(response.content, 'html.parser')
 	return html
 
-def get_games(competition="ligue1"):
+def get_games(competition):
 	html = get_page(competition)
 	games = []
 	game_elements = html.select(".pari-1")
 	for el in game_elements:
 		names = el.select(".pmq-cote-acteur")
 		team1 = "".join(names[0].text.split())
-		team2 = "".join(names[4].text.split())
+		if (competition["sport"] == "football"):
+			team2 = "".join(names[4].text.split())
+		elif (competition["sport"] == "basketball"):
+			team2 = "".join(names[2].text.split())
 		odd_els = el.select(".pmq-cote")
 		odds = []
 		for odd_el in odd_els[::2]:

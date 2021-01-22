@@ -15,6 +15,10 @@ competition_urls = {
 		"bundesliga-austria": "https://www.winamax.fr/paris-sportifs/sports/1/17/29",
 		"division-1a": "https://www.winamax.fr/paris-sportifs/sports/1/33/38",
 		"super-lig": "https://www.winamax.fr/paris-sportifs/sports/1/46/62",
+	},
+	'basketball':
+	{
+		"nba": "https://www.winamax.fr/paris-sportifs/sports/2/800000076/177",
 	}
 }
 
@@ -29,6 +33,7 @@ def get_page(competition):
 
 def get_json(competition):
 	html = get_page(competition)
+	# print()
 	split1 = html.split("var PRELOADED_STATE = ")[1]
 	split2 = split1.split(";</script>")[0]
 	return json.loads(split2)
@@ -37,7 +42,7 @@ def get_id(competition):
 	url = competition_urls[competition["sport"]][competition["competition"]]
 	return int(url.split("/")[-1])
 
-def get_games(competition="ligue1"):
+def get_games(competition):
 	games = []
 	json = get_json(competition)
 	for game in json['matches']:
@@ -47,13 +52,21 @@ def get_games(competition="ligue1"):
 		team2 = "".join(json['matches'][game]['competitor2Name'].split())
 		bet_id = json['matches'][game]['mainBetId']
 		bet = json['bets'][str(bet_id)]['outcomes']
-		if (len(bet) != 3):
+		if (competition["sport"] == "football" and len(bet) != 3):
 			continue
-		odds = [
-			json['odds'][str(bet[0])],
-			json['odds'][str(bet[1])],
-			json['odds'][str(bet[2])],
-		]
+		if (competition["competition"] == "basketball" and len(bet) != 2):
+			continue
+		if (competition["sport"] == "football"):
+			odds = [
+				json['odds'][str(bet[0])],
+				json['odds'][str(bet[1])],
+				json['odds'][str(bet[2])],
+			]
+		elif (competition["sport"] == "basketball"):
+			odds = [
+				json['odds'][str(bet[0])],
+				json['odds'][str(bet[1])],
+			]
 		games.append({
 			'team1': team1,
 			'team2': team2,
