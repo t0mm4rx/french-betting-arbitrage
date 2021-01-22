@@ -18,7 +18,8 @@ competition_urls = {
 	},
 	'basketball':
 	{
-		"nba": "https://paris-sportifs.pmu.fr/pari/competition/3502/basket-us/nba"
+		"nba": "https://paris-sportifs.pmu.fr/pari/competition/3502/basket-us/nba",
+		"euroleague": "https://paris-sportifs.pmu.fr/pari/competition/1402/basket-euro/euroligue-h"
 	}
 }
 

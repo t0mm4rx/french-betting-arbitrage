@@ -18,7 +18,8 @@ competition_urls = {
 		},
 		'basketball':
 		{
-			"nba": "https://www.betclic.fr/basket-ball-s4/nba-c13"
+			"nba": "https://www.betclic.fr/basket-ball-s4/nba-c13",
+			"euroleague": "https://www.betclic.fr/basket-ball-s4/euroligue-c14",
 		}
 }
 

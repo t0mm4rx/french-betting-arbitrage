@@ -18,7 +18,8 @@ competition_urls = {
 	},
 	'basketball':
 	{
-		"nba": "https://www.netbet.fr/basketball/etats-unis/nba"
+		"nba": "https://www.netbet.fr/basketball/etats-unis/nba",
+		"euroleague": "https://www.netbet.fr/basketball/coupes-d-europe/euroligue",
 	}
 }
 

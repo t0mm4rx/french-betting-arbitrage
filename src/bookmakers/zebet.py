@@ -18,7 +18,8 @@ competition_urls = {
 	},
 	'basketball':
 	{
-		"nba": "https://www.zebet.fr/fr/competition/206-nba"
+		"nba": "https://www.zebet.fr/fr/competition/206-nba",
+		"euroleague": "https://www.zebet.fr/fr/competition/12044-euroligue",
 	}
 }
 

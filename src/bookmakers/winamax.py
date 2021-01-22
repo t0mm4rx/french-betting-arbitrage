@@ -19,6 +19,7 @@ competition_urls = {
 	'basketball':
 	{
 		"nba": "https://www.winamax.fr/paris-sportifs/sports/2/800000076/177",
+		"euroleague": "https://www.winamax.fr/paris-sportifs/sports/2/800000034/153",
 	}
 }
 
@@ -33,7 +34,6 @@ def get_page(competition):
 
 def get_json(competition):
 	html = get_page(competition)
-	# print()
 	split1 = html.split("var PRELOADED_STATE = ")[1]
 	split2 = split1.split(";</script>")[0]
 	return json.loads(split2)
