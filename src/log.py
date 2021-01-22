@@ -24,11 +24,12 @@ def log(message, end="\n"):
 
 def discord(message):
 	global last_discord_message
-	# try:
-	while (time.time() - last_discord_message < discord_waiting_time):
-		time.sleep(discord_waiting_time)
-	last_discord_message = time.time()
-	notifier = dn.Notifier(config.discord_url)
-	notifier.send(message, print_message=False)
-	# except:
-	# 	log("Error: cannot send message on Discord: {}".format(sys.exc_info()[0]))
+	print(message)
+	try:
+		while (time.time() - last_discord_message < discord_waiting_time):
+			time.sleep(discord_waiting_time)
+		last_discord_message = time.time()
+		notifier = dn.Notifier(config.discord_url)
+		notifier.send(message, print_message=False)
+	except:
+		log("Error: cannot send message on Discord: {}".format(sys.exc_info()[0]))
