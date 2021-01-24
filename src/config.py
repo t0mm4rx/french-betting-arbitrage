@@ -5,7 +5,7 @@ competitions = [
 	{'sport': "football", 'competition': "liga"},
 	{'sport': "football", 'competition': "bundesliga"},
 	{'sport': "football", 'competition': "premier-league"},
-	# {'sport': "football", 'competition': "serie-a"},
+	{'sport': "football", 'competition': "serie-a"},
 	{'sport': "football", 'competition': "primeira"},
 	{'sport': "football", 'competition': "serie-a-brasil"},
 	{'sport': "football", 'competition': "a-league"},
