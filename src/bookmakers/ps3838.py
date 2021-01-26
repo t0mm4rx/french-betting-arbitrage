@@ -33,6 +33,7 @@ def get_page(competition):
 	else:
 		return None
 	options = Options()
+	options.add_argument("--no-sandbox")
 	options.headless = True
 	driver = webdriver.Chrome("./chromedriver", chrome_options=options)
 	driver.set_window_size(1920, 1080)
