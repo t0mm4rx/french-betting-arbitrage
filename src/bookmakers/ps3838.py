@@ -2,6 +2,8 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import time
+import re
+import traceback
 
 competition_urls = {
 	'football':
@@ -36,20 +38,66 @@ def get_page(competition):
 	driver.set_window_size(1920, 1080)
 	driver.get(url['url'])
 	driver.find_element_by_css_selector("[data-league=\"{}\"]".format(url['code'])).click()
-	found = False
-	while (not found):
+	found = 0
+	while (found >= 0):
 		try:
 			driver.find_element_by_css_selector(".OneXTwo_0")
-			found = True
+			found = -1
 		except:
-			pass
-	html = driver.execute_script("return document.documentElement.outerHTML;")
-	driver.quit()
-	return BeautifulSoup(html, 'html.parser')
+			if (found >= 1000):
+				driver.quit()
+				return get_page(competition)
+			found += 1
+	return driver
 
 def get_games(competition):
 	games = []
-	html = get_page(competition)
+	driver = get_page(competition)
+	if (not driver):
+		return None
+	good = False
+	# We get every date labels
+	while not good:
+		try:
+			dates = driver.find_elements_by_css_selector(".dateMenutb td:not([data-date=\"null\"])")
+			dates = [d.text for d in dates]
+			good = True
+		except:
+			pass
+	# We loop through each label, find the corresponding tab and click it
+	for date in dates:
+		c = float(date.split("(")[1].split(")")[0])
+		if (not c):
+			continue
+		good = False
+		# We click on the tab
+		while not good:
+			try:
+				date_new = driver.find_element_by_link_text(date)
+				date_new.click()
+				# We wait for the page content to load
+				found = False
+				while not found:
+					try:
+						driver.find_element_by_css_selector(".OneXTwo_0")
+						found = True
+					except:
+						pass
+				# Once the page is loaded, we get the HTML and parses it with bs4
+				games_page = parse_page(
+						competition,
+						BeautifulSoup(driver.execute_script("return document.documentElement.outerHTML;"), 'html.parser')
+					)
+				for game in games_page:
+					games.append(game)
+				good = True
+			except:
+				pass
+	driver.quit()
+	return games
+
+def parse_page(competition, html):
+	games = []
 	if (not html):
 		return None
 	table = html.select(".OneXTwo_0")[0]

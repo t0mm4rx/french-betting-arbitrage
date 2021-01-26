@@ -1,6 +1,11 @@
 from difflib import SequenceMatcher
 import log
 
+mismatch_pairs = [
+	["MelbourneCity", "MelbourneVictory"],
+	["MelbourneCityFC", "MelbourneVictoryFC"]
+]
+
 def str_similarity(a, b):
 	return SequenceMatcher(None, a, b).ratio()
 
@@ -18,6 +23,11 @@ def get_game(game, others):
 		return None
 	if (str_similarity(game['team2'], m_obj['team2']) < 0.81):
 		return None
+	for mismatch in mismatch_pairs:
+		if ([game['team1'], m_obj['team1']] == mismatch or [m_obj['team1'], game['team1']] == mismatch):
+			return None
+		if ([game['team2'], m_obj['team2']] == mismatch or [m_obj['team2'], game['team2']] == mismatch):
+			return None
 	return m_obj
 
 def arb3(a, n, b):
